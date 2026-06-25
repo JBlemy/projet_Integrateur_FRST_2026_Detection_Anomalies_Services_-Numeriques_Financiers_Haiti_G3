@@ -1,0 +1,21 @@
+Variable,Type_Technique,Type_Donnee,Description,Valeurs_manquantes,Taux_manquants,Valeurs_uniques,Min,Max
+transaction_id,object,Categoriel,Identifiant unique attribue a chaque transaction financiere. Variable technique indispensable pour assurer l'auditabilite et le tracage de chaque alerte generee.,0,0.0%,550000,N/A,N/A
+customer_id,object,Categoriel,Identifiant unique du client. Variable pivot qui permet d'agreger les transactions par individu afin de profiler son comportement historique.,0,0.0%,79916,N/A,N/A
+transaction_date,object,Temporel,Date calendaire a laquelle l'operation a ete enregistree. Permet d'analyser les comportements selon le jour de la semaine ou les periodes du mois (ex: jours de paie).,0,0.0%,1827,N/A,N/A
+transaction_time,object,Temporel,"Heure precise (minutes, secondes) de l'execution de la transaction, essentielle pour situer l'action dans la journee.",0,0.0%,1440,N/A,N/A
+account_type,object,Categoriel,"Type de compte bancaire sur lequel l'operation est enregistree, ce qui permet de contextualiser les plafonds autorises. Types: Savings, CURRENT, Salary, NRI, Fixed Deposit.",0,0.0%,5,N/A,N/A
+transaction_type,object,Categoriel,"Nature commerciale ou technique de l'operation financiere executee (DEPOSIT, WITHDRAWAL, TRANSFER, PAYMENT).",0,0.0%,10,N/A,N/A
+transaction_amount,float64,Numerique,Montant financier de l'operation. Variable quantitative principale exploitee par les algorithmes pour mesurer l'ecart statistique a la moyenne.,0,0.0%,374552,2.4,10000000.0
+transaction_direction,object,Categoriel,"Sens du flux financier du point de vue du compte du client. DEBIT = Sortie d'argent, CREDIT = Entree d'argent.",0,0.0%,2,N/A,N/A
+account_balance,float64,Numerique,Solde restant sur le compte apres l'execution de la transaction. Utile pour detecter les comportements de vidage rapide de compte.,0,0.0%,536170,500.0,5000000.0
+merchant_category,object,Categoriel,Secteur d'activite du commercant ou du beneficiaire de la transaction. Permet d'identifier des habitudes d'achat ou des commerces a haut risque.,0,0.0%,15,N/A,N/A
+state,object,Categoriel,Localisation geographique (Etat/Region) ou la transaction a ete initiee. Permet de detecter les incoherences geographiques.,0,0.0%,10,N/A,N/A
+credit_score,int64,Numerique,Score de solvabilite ou cote de credit du client etablie par l'institution. Generalement compris entre 300 et 850. Un score faible peut etre correle a un profil de risque different.,0,0.0%,600,300,899
+has_loan,int64,Booleen,"Indicateur signalant si le client possede un ou plusieurs emprunts actifs au sein de l'etablissement. 0 = Pas de pret, 1 = Pret actif.",0,0.0%,2,0,1
+loan_type,object,Categoriel,"Nature du pret contracte par le client si la variable has_loan est active (Home Loan, Personal Loan, Auto Loan, etc.).",377134,68.6%,6,N/A,N/A
+emi_amount,float64,Numerique,Equated Monthly Installment. Represente le montant mensuel fixe que le client doit rembourser pour ses emprunts.,0,0.0%,177524,0.0,153325.74
+transaction_status,object,Categoriel,"Statut final de la transaction au niveau du systeme bancaire. SUCCESS = Validee, FAILED = Echouee, PENDING = En attente, REVERSED = Annulee.",0,0.0%,4,N/A,N/A
+channel,object,Categoriel,"Canal ou interface utilise par le client pour initier l'operation financiere. Mobile_App, Web, ATM, POS_Terminal, Branch, API.",0,0.0%,6,N/A,N/A
+kyc_status,object,Categoriel,"Statut de conformite du dossier Know Your Customer. VERIFIED = Valide, PENDING = En attente, EXPIRED = Non conforme.",0,0.0%,3,N/A,N/A
+is_fraud,int64,Booleen,"Variable cible indiquant si la transaction est une fraude avere. 0 = Normal, 1 = Fraude. Strictement masquee durant l'entrainement et reservee a la validation finale.",0,0.0%,2,0,1
+transaction_hour,int64,Numerique,Variable numerique extrayant uniquement l'heure (0 a 23) pour faciliter l'analyse statistique des operations nocturnes.,0,0.0%,24,0,23

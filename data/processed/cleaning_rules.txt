@@ -1,0 +1,38 @@
+PROTOCOLE ET REGLES DE NETTOYAGE
+==================================================
+
+Date: 2026-06-25 01:59:48
+
+PRINCIPE_NON_ALTERATION:
+  - regle: Creation d'une version propre sans ecraser les donnees brutes
+  - justification: Conformite avec les bonnes pratiques d'ingenierie des donnees
+  - fichier_source: ../data/raw/indian_banking_transactions.csv
+  - fichier_destination: ../data/processed/indian_banking_transactions_clean.csv
+
+DOUBLONS:
+  - regle: Suppression des lignes strictement identiques
+  - justification: Les doublons peuvent fausser les analyses et les modeles
+  - exceptions: Conserver les transactions identiques avec des timestamps differents
+  - impact: Reduction du nombre de lignes, amelioration de la qualite
+
+VALEURS_MANQUANTES:
+  - regle: Traitement specifique selon le type de variable
+  - justification: Preserver l'integrite des donnees et eviter les biais
+  - pour_categorielles: Remplacer par "Unknown" (maintien de la categorie)
+  - pour_numeriques: Remplacer par la mediane (robuste aux valeurs aberrantes)
+  - pour_temporelles: Conserver ou imputer par la valeur la plus frequente
+  - impact: Maintien de la taille du dataset, reduction des biais
+
+VALEURS_EXTREMES_OUTLIERS:
+  - regle: MAINTIEN DES MONTANTS GEANTS
+  - justification: Les anomalies financieres recherchees par l'apprentissage non supervise
+  - approche: Detection sans suppression (conservation pour Isolation Forest)
+  - traitement: Bornage (clipping) pour les valeurs extremes uniquement si necessaire
+  - impact: Conservation des anomalies potentielles pour la modelisation
+
+TYPES_FORMATS:
+  - regle: Correction des types de donnees
+  - justification: Assurer la compatibilite avec les algorithmes
+  - actions: ['Convertir les dates en datetime', 'Convertir les categorielles en type category', 'Normaliser les formats de texte']
+  - impact: Amelioration de la performance des modeles
+
