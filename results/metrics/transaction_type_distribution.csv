@@ -1,0 +1,11 @@
+transaction_type,count
+UPI,153986
+IMPS,77038
+NEFT,66615
+POS,60278
+ATM_Withdrawal,55106
+Net_Banking,38458
+RTGS,32964
+Auto_Debit,27418
+Cheque,21711
+Credit_Card,16426
