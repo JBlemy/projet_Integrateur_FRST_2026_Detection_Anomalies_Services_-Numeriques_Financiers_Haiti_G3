@@ -2,7 +2,7 @@
 SYNTHESE DE L'ANALYSE EXPLORATOIRE
 ============================================================
 
-Date: 2026-07-02 09:31:01
+Date: 2026-07-02 19:50:52
 
 13.1 RESUME DES DONNEES:
 ----------------------------------------
@@ -11,7 +11,7 @@ Lignes nettoyees: 550,000
 Lignes supprimees: 0
 
 Variables numeriques: 7
-Variables categorielles: 11
+Variables categorielles: 13
 
 13.2 PRINCIPAUX CONSTATS:
 ----------------------------------------

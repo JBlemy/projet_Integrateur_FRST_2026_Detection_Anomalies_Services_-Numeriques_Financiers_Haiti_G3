@@ -1,0 +1,36 @@
+# ===================================================================
+# CONFIGURATION DU PROJET DE DÉTECTION D'ANOMALIES
+# ===================================================================
+
+# Configuration des données
+data:
+  raw_path: "data/raw/indian_banking_transactions.csv"
+  processed_path: "data/processed/indian_banking_transactions_clean.csv"
+
+# Préprocessing
+preprocessing:
+  scaling: "standard"
+  test_size: 0.2
+
+# Isolation Forest
+isolation_forest:
+  n_estimators: 100
+  contamination: 0.01
+  max_samples: "auto"
+  random_state: 42
+  bootstrap: false
+
+# DBSCAN
+dbscan:
+  eps: 0.5
+  min_samples: 5
+  metric: "euclidean"
+
+# ACP (PCA)
+pca:
+  n_components: 2
+
+# Évaluation
+evaluation:
+  metrics: ["precision", "recall", "f1", "roc_auc"]
+  visualization: true
