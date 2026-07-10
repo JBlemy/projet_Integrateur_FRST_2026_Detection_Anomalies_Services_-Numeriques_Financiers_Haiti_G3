@@ -1,0 +1,14 @@
+============================================================
+RAPPORT ISOLATION FOREST
+============================================================
+
+Date: 2026-07-09 21:04:48
+
+Total transactions: 550,000
+Anomalies détectées: 5,500 (1.00%)
+
+RECOMMANDATIONS:
+----------------------------------------
+1. Valider les anomalies avec des experts métier
+2. Ajuster le paramètre contamination si nécessaire
+3. Ré-entraîner le modèle périodiquement

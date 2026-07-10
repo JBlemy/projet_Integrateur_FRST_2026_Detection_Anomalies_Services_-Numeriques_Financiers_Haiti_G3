@@ -37,7 +37,7 @@ st.sidebar.markdown(
 """
 )
 
-FILE_PATH = r"C:\Users\Jonas\Documents\Data_science_ueh\projet_final\projet_Integrateur_FRST_2026_Detection_Anomalies_Services_-Numeriques_Financiers_Haiti_G3\data\processed\indian_banking_transactions_clean.csv"
+FILE_PATH = r"C:\Users\USER\Desktop\projet_Integrateur_FRST_2026_Detection_Anomalies_Services_ Numeriques_Financiers_Haiti_G3\data\processed\indian_banking_transactions_clean.csv"
 
 
 # ==============================================================================
