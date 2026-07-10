@@ -1,12 +1,12 @@
 JOURNAL DE NETTOYAGE
 ==================================================
-Date : 2026-06-29 20:28:13
+Date : 2026-07-02 14:46:23
 
 OPERATIONS EFFECTUEES :
 ----------------------------------------
   loan_type: 'Unknown' pour valeurs manquantes
-  transaction_date: converti en datetime
-  transaction_time: converti en datetime
+  transaction_date: converti en date
+  transaction_time: extraire l'heure
   transaction_amount : 7143 valeurs extremes conservees pour detection d'anomalies
   account_balance : 8553 valeurs extremes conservees pour detection d'anomalies
   emi_amount : 11178 valeurs extremes conservees pour detection d'anomalies
