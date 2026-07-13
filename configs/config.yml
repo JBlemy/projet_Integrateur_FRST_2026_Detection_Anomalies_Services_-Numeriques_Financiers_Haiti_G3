@@ -22,13 +22,14 @@ isolation_forest:
 
 # DBSCAN
 dbscan:
-  eps: 0.5
-  min_samples: 5
   metric: "euclidean"
+  # Les valeurs finales sont déterminées dans le notebook par les k-distances.
+  min_samples_candidates: [5, 10, 15, 20]
 
 # ACP (PCA)
 pca:
-  n_components: 2
+  # Nombre de composantes choisi automatiquement pour conserver cette variance.
+  variance_threshold: 0.99
 
 # Évaluation
 evaluation:
