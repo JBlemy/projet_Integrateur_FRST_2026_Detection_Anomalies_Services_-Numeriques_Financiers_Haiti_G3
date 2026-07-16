@@ -1,15 +1,15 @@
-JOURNAL DE NETTOYAGE
+JOURNAL DE NETTOYAGE DES DONNEES (CLEANING LOG)
 ==================================================
-Date : 2026-07-02 14:46:23
+Date d'exécution : 2026-07-16 16:09:03
+Volume initial : 550,000 lignes
+Volume final   : 550,000 lignes
 
-OPERATIONS EFFECTUEES :
-----------------------------------------
-  loan_type: 'Unknown' pour valeurs manquantes
-  transaction_date: converti en date
-  transaction_time: extraire l'heure
-  transaction_amount : 7143 valeurs extremes conservees pour detection d'anomalies
-  account_balance : 8553 valeurs extremes conservees pour detection d'anomalies
-  emi_amount : 11178 valeurs extremes conservees pour detection d'anomalies
-  is_fraud : 4873 valeurs extremes conservees pour detection d'anomalies
-
-Total : 7 operations effectuees
+Détails des opérations :
+ - loan_type: 'Unknown' pour valeurs manquantes
+ - transaction_date: converti en date
+ - transaction_time: extraire l'heure
+ - transaction_amount: 7143 outliers conservés
+ - account_balance: 8553 outliers conservés
+ - credit_score: 0 outliers conservés
+ - emi_amount: 11178 outliers conservés
+ - is_fraud: 4873 outliers conservés
