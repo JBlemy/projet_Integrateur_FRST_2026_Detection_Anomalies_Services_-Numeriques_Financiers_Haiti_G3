@@ -1,37 +1,44 @@
 # ===================================================================
-# CONFIGURATION DU PROJET DE DÉTECTION D'ANOMALIES
+# CONFIGURATION DU PROJET DE DÉTECTION D'ANOMALIES (PRODUCTION-READY)
 # ===================================================================
 
-# Configuration des données
+# Configuration des pipelines d'accès aux données
 data:
   raw_path: "data/raw/indian_banking_transactions.csv"
   processed_path: "data/processed/indian_banking_transactions_clean.csv"
 
-# Préprocessing
+# Pipeline de prétraitement
 preprocessing:
-  scaling: "standard"
+  # L'échelle standard est gérée de manière intrinsèque par le traitement FAMD.
+  # Aucun StandardScaler externe n'est appliqué pour préserver les variances factorielles.
+  scaling: "none" 
   test_size: 0.2
 
-# Isolation Forest
+# Configuration du modèle de réduction de dimensionnalité mixte
+famd:
+  # Seuil de sécurité pour exclure les variables catégorielles à haute cardinalité
+  max_cardinality: 15
+  # Nombre maximal de dimensions à projeter pour l'espace factoriel
+  n_components: 6
+  n_iter: 3
+  random_state: 42
+
+# Paramétrage d'Isolation Forest (Cœur du système de détection)
 isolation_forest:
   n_estimators: 100
+  # Calibré à 1% pour s'adapter à la capacité opérationnelle des analystes (limitation alert fatigue)
   contamination: 0.01
   max_samples: "auto"
   random_state: 42
   bootstrap: false
 
-# DBSCAN
+# DBSCAN (Algorithme secondaire d'analyse de densité)
 dbscan:
   metric: "euclidean"
-  # Les valeurs finales sont déterminées dans le notebook par les k-distances.
+  # Les valeurs finales sont déterminées dynamiquement via le tracé de k-distances
   min_samples_candidates: [5, 10, 15, 20]
 
-# ACP (PCA)
-pca:
-  # Nombre de composantes choisi automatiquement pour conserver cette variance.
-  variance_threshold: 0.99
-
-# Évaluation
+# Métriques d'évaluation et de monitoring du système
 evaluation:
   metrics: ["precision", "recall", "f1", "roc_auc"]
   visualization: true

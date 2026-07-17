@@ -1,4 +1,0 @@
-Variables transformées par log1p:
-  - transaction_amount
-  - account_balance
-  - emi_amount

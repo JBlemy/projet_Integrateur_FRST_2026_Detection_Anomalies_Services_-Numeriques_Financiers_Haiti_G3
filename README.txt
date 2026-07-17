@@ -1,4 +1,3 @@
-
 ================================================================================
 PROJET DE DETECTION D'ANOMALIES DANS LES SERVICES FINANCIERS NUMERIQUES EN HAITI
 ================================================================================
@@ -11,7 +10,7 @@ Titre           : Conception d'un système intelligent de détection d'anomalies
 Groupe          : G3
 Membres         : Blemy JOSEPH, Jonas CLOCIN, Martin FRANÇOIS
 Encadrant       : Evens TOUSSAINT
-Date            : 26/06/2026
+Date            : 16/07/2026
 Domaine         : Secteur bancaire / Services financiers numériques
 
 
@@ -29,7 +28,7 @@ Ce projet vise à développer un système capable de :
 STRUCTURE DU PROJET
 ===================
 
-pwoje_deteksyon_anomali/
+projet_Integrateur_FRST_2026_Detection_Anomalies_Services_Numeriques_Financiers_Haiti_G3/
 │
 ├── README.md                          # Description générale du projet
 ├── requirements.txt                   # Dépendances Python
@@ -57,17 +56,29 @@ pwoje_deteksyon_anomali/
 │   │   ├── distributions.png
 │   │   ├── boxplots.png
 │   │   ├── correlation_heatmap.png
-│   │   └── topological_isolation.png
+│   │   ├── topological_isolation.png
+│   │   ├── if_scores_distribution.png
+│   │   ├── if_famd_visualization.png
+│   │   ├── if_variable_comparison.png
+│   │   └── if_hourly_density_comparison.png
 │   ├── metrics/
 │   │   ├── descriptive_stats_numeric.csv
 │   │   ├── correlation_matrix.csv
-│   │   └── summary_report.txt
+│   │   ├── summary_report.txt
+│   │   ├── isolation_forest_stats.csv
+│   │   ├── anomalies_summary.csv
+│   │   └── isolation_forest_report.txt
 │   └── anomalies/
-│       └── detected_anomalies.csv
+│       ├── detected_anomalies.csv
+│       └── detected_anomalies_if.csv
 │
+├── models/
+│   ├── isolation_forest.pkl             # Modèle Isolation Forest entraîné
+│   ├── scaler.pkl                       # StandardScaler ajusté
+│   └── famd_model.pkl                   # Modèle FAMD ajusté
 │
 ├── configs/
-│   └── config.yml                       # Paramètres des modèles
+│   └── config.yml                      # Paramètres des modèles
 │
 └── docs/
     ├── rapport_final.pdf                # Rapport 20 pages
@@ -118,6 +129,7 @@ TRAITEMENTS EFFECTUES
     - Analyse topologique (isolation des fraudes)
     - Analyse des risques par canal
     - Saisonnalité horaire
+    - Analyse comparative (Légitime vs Fraude)
 
 4.  RESULTATS CLES
     - Taux de fraude : 1% (5 500 transactions)
@@ -140,9 +152,11 @@ ALGORITHMES UTILISES
     - Identification des points aberrants (bruit)
     - Segmentation des comportements
 
-3.  ACP (Analyse en Composantes Principales)
-    - Réduction de dimensionnalité (7 → 2)
-    - Visualisation des données
+3.  FAMD (Factor Analysis of Mixed Data)
+    - Réduction de dimensionnalité pour données mixtes
+    - Traite correctement les variables numériques et catégorielles
+    - Équilibre l'influence des variables
+    - Utilisé comme alternative à PCA + One-Hot
 
 
 PRINCIPAUX RESULTATS DE L'ANALYSE
@@ -175,19 +189,24 @@ DECISIONS DE MODELISATION
 1.  CONSERVER LES OUTLIERS
     - Ce sont les anomalies que nous cherchons à détecter
 
-2.  NORMALISER LES DONNEES
-    - StandardScaler (problème d'échelle des montants)
+2.  TRANSFORMATION LOG + STANDARDSCALER
+    - Log-transformation pour réduire l'asymétrie
+    - StandardScaler pour mettre les variables sur la même échelle
 
 3.  UTILISER ISOLATION FOREST
     - Les fraudes sont isolées dans l'espace
 
-4.  UTILISER DBSCAN
+4.  UTILISER FAMD POUR LA REDUCTION DE DIMENSION
+    - Traite correctement les données mixtes
+    - Équilibre l'influence des variables
+
+5.  UTILISER DBSCAN
     - Pour la segmentation et le clustering
 
-5.  NE PAS UTILISER L'HEURE SEULE
+6.  NE PAS UTILISER L'HEURE SEULE
     - Combiner avec d'autres variables (canal, montant)
 
-6.  SURVEILLER L'API
+7.  SURVEILLER L'API
     - Canal à haut risque : surveillance prioritaire
 
 
@@ -202,6 +221,7 @@ LIMITES DE L'ETUDE
 2.  METHODOLOGIQUES
     - Besoin de surveillance continue en temps réel
     - Le modèle doit être ré-entraîné régulièrement
+    - FAMD nécessite l'installation de la bibliothèque 'prince'
 
 3.  STRATEGIES D'ATTENUATION
     - Ajuster les seuils pour le contexte haïtien
@@ -213,7 +233,7 @@ PROCHAINES ETAPES
 =================
 
 1.  Notebook 02 : Isolation Forest
-    - Entraînement du modèle
+    - Entraînement du modèle avec FAMD
     - Détection des anomalies
     - Visualisation des résultats
 
@@ -234,11 +254,14 @@ RESSOURCES
 - Python 3.8+
 - Pandas
 - NumPy
-- Scikit-learn
 - Matplotlib
 - Seaborn
+- Scikit-learn
 - Jupyter Notebook
+- Prince (pour FAMD)
 
 Installation des dépendances :
     pip install -r requirements.txt
+    pip install prince
 
+================================================================================
