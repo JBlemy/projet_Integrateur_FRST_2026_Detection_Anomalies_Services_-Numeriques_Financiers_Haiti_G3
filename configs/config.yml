@@ -1,44 +1,54 @@
 # ===================================================================
-# CONFIGURATION DU PROJET DE DÉTECTION D'ANOMALIES (PRODUCTION-READY)
+# CONFIGURATION DU PROJET DE DETECTION D'ANOMALIES
 # ===================================================================
 
-# Configuration des pipelines d'accès aux données
+# Configuration des donnees
 data:
   raw_path: "data/raw/indian_banking_transactions.csv"
   processed_path: "data/processed/indian_banking_transactions_clean.csv"
 
-# Pipeline de prétraitement
-preprocessing:
-  # L'échelle standard est gérée de manière intrinsèque par le traitement FAMD.
-  # Aucun StandardScaler externe n'est appliqué pour préserver les variances factorielles.
-  scaling: "none" 
-  test_size: 0.2
+# Split temporel
+temporal_split:
+  train_ratio: 0.6
+  validation_ratio: 0.2
+  test_ratio: 0.2
+  random_state: 42
 
-# Configuration du modèle de réduction de dimensionnalité mixte
+# StandardScaler
+scaler:
+  fit_on_train: true
+
+# FAMD 
 famd:
-  # Seuil de sécurité pour exclure les variables catégorielles à haute cardinalité
   max_cardinality: 15
-  # Nombre maximal de dimensions à projeter pour l'espace factoriel
-  n_components: 6
-  n_iter: 3
+  n_components: 50
+  n_iter: 10
   random_state: 42
 
-# Paramétrage d'Isolation Forest (Cœur du système de détection)
+# Isolation Forest 
 isolation_forest:
-  n_estimators: 100
-  # Calibré à 1% pour s'adapter à la capacité opérationnelle des analystes (limitation alert fatigue)
+  n_estimators: 500
   contamination: 0.01
-  max_samples: "auto"
-  random_state: 42
+  max_samples: 8192
+  max_features: 1.0
   bootstrap: false
+  random_state: 42
+  n_jobs: -1
 
-# DBSCAN (Algorithme secondaire d'analyse de densité)
-dbscan:
-  metric: "euclidean"
-  # Les valeurs finales sont déterminées dynamiquement via le tracé de k-distances
-  min_samples_candidates: [5, 10, 15, 20]
+# Calibration 
+threshold_calibration:
+  objective: "precision_recall_curve"
+  optimization_metric: "f1"
+  min_recall: 0.85
+  min_precision: 0.30
 
-# Métriques d'évaluation et de monitoring du système
+# Evaluation
 evaluation:
-  metrics: ["precision", "recall", "f1", "roc_auc"]
+  metrics: ["precision", "recall", "f1", "roc_auc", "pr_auc", "balanced_accuracy"]
   visualization: true
+  production_targets:
+    auc_roc: 0.90
+    recall: 0.85
+    precision: 0.30
+    f1: 0.50
+    false_positive_alert_share: 0.10
